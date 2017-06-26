@@ -49,6 +49,7 @@ public class ChunkGenCommand extends CommandBase {
                         int depth = parseInt(astring[3]);
                         int width = parseInt(astring[4]);
                         int dimensionID = icommandsender.getEntityWorld().provider.getDimension();
+                        int chunksToSkip = 0;
                         boolean logToChat = false;
                         if (astring.length > 5 && !"~".equals(astring[5])) {
                             dimensionID = parseInt(astring[5]);
@@ -56,7 +57,11 @@ public class ChunkGenCommand extends CommandBase {
                         if (astring.length > 6) {
                             logToChat = parseBoolean(astring[6]);
                         }
-                        notifyCommandListener(icommandsender, this, "commands.chunkgen.enqueued", Utilities.queueChunkGeneration(icommandsender, 0, x, z, width,depth, dimensionID, logToChat));
+                        if (astring.length > 7) {
+                            chunksToSkip = parseInt(astring[7]);
+                        }
+
+                        notifyCommandListener(icommandsender, this, "commands.chunkgen.enqueued", Utilities.queueChunkGeneration(icommandsender, chunksToSkip, x, z, width,depth, dimensionID, logToChat));
                     }
                     break;
                 case SUB_CMD_RADIUS:
@@ -67,6 +72,7 @@ public class ChunkGenCommand extends CommandBase {
                         int z = (int) parseCoordinate(icommandsender.getPosition().getZ() >> 4, astring[2], false).getResult();
                         int radius = parseInt(astring[3]);
                         int dimensionID = icommandsender.getEntityWorld().provider.getDimension();
+                        int chunksToSkip = 0;
                         boolean logToChat = false;
                         if (astring.length > 4 && !"~".equals(astring[4])) {
                             dimensionID = parseInt(astring[4]);
@@ -74,7 +80,10 @@ public class ChunkGenCommand extends CommandBase {
                         if (astring.length > 5) {
                             logToChat = parseBoolean(astring[5]);
                         }
-                        notifyCommandListener(icommandsender, this, "commands.chunkgen.enqueued", Utilities.queueChunkGeneration(icommandsender, 0, x, z, radius, dimensionID, logToChat));
+                        if (astring.length > 6) {
+                            chunksToSkip = parseInt(astring[6]);
+                        }
+                        notifyCommandListener(icommandsender, this, "commands.chunkgen.enqueued", Utilities.queueChunkGeneration(icommandsender, chunksToSkip, x, z, radius, dimensionID, logToChat));
                     }
                     break;
                 case SUB_CMD_STOP:
